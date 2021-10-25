@@ -58,6 +58,14 @@ struct WaveShaper : Module {
 		configParam(WaveShaper::SHAPE_3_CV_PARAM, -1.0, 1.0, 0.0, "Shape C CV");
 		configParam(WaveShaper::MIX_PARAM, 0.0, 1.0, 0.5, "Dry/Wet Mix");
 		configParam(WaveShaper::OUTPUT_GAIN_PARAM, 0.0, 1.0, 0.5, "Wet Level");
+		configInput(MASTER_INPUT, "Master");
+		configInput(IN_A_INPUT, "A");
+		configInput(IN_B_INPUT, "B");
+		configInput(IN_C_INPUT, "C");
+		configInput(SHAPE_1_CV_INPUT, "(A) Shape Control Voltage");
+		configInput(SHAPE_2_CV_INPUT, "(B) Shape Control Voltage");
+		configInput(SHAPE_3_CV_INPUT, "(C) Shape Control Voltage");
+		configOutput(OUT_OUTPUT, "Master");
 	}
 
 	void process(const ProcessArgs& args) override;

@@ -453,6 +453,31 @@ struct VCO : Module {
 		configParam(VCO::SHAPE_CV_PARAM, -1.0, 1.0, 0.0, "Fold Shape CV");
 		configParam(VCO::UP_PARAM, 0.0, 1.0, 0.0, "Upper Shape");
 		configParam(VCO::DOWN_PARAM, 0.0, 1.0, 0.0, "Lower Shape");
+		configInput(EXP_1_INPUT, "(A) Exponential FM Attenuator Control Voltage");
+		configInput(VOCT_1_INPUT, "(A) Volt/Octave");
+		configInput(SYNC1_INPUT, "(A) Start of Cycle Sync");
+		configInput(VOCT_2_INPUT, "(B) Volt/Octave");
+		configInput(SYNC2_INPUT, "(B) Start of Cycle Sync");
+		configInput(LIN_1_INPUT, "(A) Linear FM Attenuator Control Voltage");
+		configInput(LIN_2_INPUT, "(B) Linear FM Attenuator Control Voltage");
+		configInput(EXP_2_INPUT, "(B) Exponential FM Attenuator Control Voltage");
+		configInput(PW_2_INPUT, "(B) Pulse Width Control Voltage");
+		configInput(EXT_SRC_INPUT, "External Fold Source");
+		configInput(SHAPE_1_CV_INPUT, "Fold Index Control Voltage");
+		configInput(SHAPE_CV_INPUT, "Fold Control Voltage");
+		configInput(FMBUS_INPUT, "FM Index Control Voltage");
+		configInput(SYNCSWITCHA_CV_INPUT, "Hardsync (A) Control Voltage");
+		configInput(SYNCSWITCHB_CV_INPUT, "Hardsync (B) Control Voltage");
+		configInput(UP_INPUT, "Asymmetric Up Folding Control Voltage");
+		configInput(DOWN_INPUT, "Asymmetric Down Folding Control Voltage");
+		configOutput(SIN_OUTPUT, "(A) Sin");
+		configOutput(TRI_OUTPUT, "(A) Triangle");
+		configOutput(SAW_OUTPUT, "(A) Sawtooth");
+		configOutput(SIN_2_OUTPUT, "(B) Sin");
+		configOutput(SQR_2_OUTPUT, "(B) Square");
+		configOutput(FOLD_OUTPUT, "Fold");
+		getParamQuantity(LFOMODE1_PARAM)->randomizeEnabled = false;
+		getParamQuantity(LFOMODE2_PARAM)->randomizeEnabled = false;
 	}
 
 	void process(const ProcessArgs& args) override;
@@ -815,6 +840,19 @@ struct BVCO : Module {
 		configParam(BVCO::FMLIN_PARAM, 0.0, 1.0, 0.0, "Linear FM", "%", 0.f, 100);
 		configParam(BVCO::FMEXP_PARAM, 0.0, 1.0, 0.0, "Exponential FM", "%", 0.f, 100);
 		configParam(BVCO::PW_PARAM, 0.0, 1.0, 0.5, "Pulse Width", "%", 0.f, 100);
+		configInput(VOCT_INPUT, "Volt/Octave");
+		configInput(SYNC_INPUT, "Start of Cycle Sync");
+		configInput(PW_INPUT, "Pulse Width Control Voltage");
+		configInput(LIN_INPUT, "Linear FM Attenuator Control Voltage");
+		configInput(EXP_INPUT, "Exponential FM Attenuator Control Voltage");
+		configOutput(RAMP_OUTPUT, "Ramp");
+		configOutput(SIN_OUTPUT, "Sin");
+		configOutput(TRI_OUTPUT, "Triangle");
+		configOutput(SAW_OUTPUT, "Sawtooth");
+		configOutput(SQR_OUTPUT, "Square");
+		configOutput(HALF_OUTPUT, "Half-Wave Rectified Sin");
+		configOutput(FULL_OUTPUT, "Full-Wave Rectified Sin");
+		getParamQuantity(LFOMODE1_PARAM)->randomizeEnabled = false;
 	}
 
 	void process(const ProcessArgs& args) override;

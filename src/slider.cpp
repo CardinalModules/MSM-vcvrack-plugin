@@ -27,6 +27,10 @@ struct SimpleSlider : Module {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS);
 		configParam(SimpleSlider::SLIDER_PARAM, 0.0, 1.0, 0.5, "Slider");
 		configParam(SimpleSlider::TYPE_PARAM, 0.0, 1.0, 0.0, "Type");
+		configInput(IN1_INPUT, "#1");
+		configInput(IN2_INPUT, "#2");
+		configInput(CV_INPUT, "Slider Position Control Voltage");
+		configOutput(MAIN_OUTPUT, "Master");
 	}
 
 	void process(const ProcessArgs& args) override;

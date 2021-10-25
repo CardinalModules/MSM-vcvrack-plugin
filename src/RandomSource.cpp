@@ -38,6 +38,12 @@ struct RandomSource : Module {
 			configParam(RandomSource::SHAPE_PARAM, 0.0, 1.0, 0.5, "Shape");
 			configParam(RandomSource::RANGE_CV_PARAM, 0.0, 1.0, 0.0, "Sample Range CV");
 			configParam(RandomSource::SWITCH_PARAM, 0.0, 1.0, 0.0, "Uni/Bi");
+			configInput(SH_INPUT, "Sample");
+			configInput(TRIG_INPUT, "Trigger");
+			configInput(SLEW_CV, "Slew Magnitude Control Voltage");
+			configInput(RANGE_CV_INPUT, "Sample Input Attenuator Control Voltage");
+			configOutput(SH_OUTPUT, "Sample & Hold");
+			configOutput(SLEWED_OUT, "Amplitude Slewed");
 		}
 
 		void process(const ProcessArgs& args) override;

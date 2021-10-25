@@ -164,29 +164,47 @@ struct Delay : Module {
 
 	Delay() {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
-    configParam(Delay::SYNCA_PARAM, 0.0f, 1.0f, 0.0f, "Sync");
-    configParam(Delay::CLEAR_A, 0.0f, 1.0f, 0.0f, "Clear");
-    configParam(Delay::LEVEL_A, 0.0f, 1.0f, 0.5f, "Level", "%", 0.0f, 100.0f);
-    configParam(Delay::CROSSFEED_A, 0.0f, 1.0f, 0.0f, "Crossfeed", "%", 0.0f, 100.0f);
-    configParam(Delay::TIME_A_PARAM, 0.0f, 1.0f, 0.6748f, "Time Delay", "ms", (10.0f / 1e-3), 1.0f, 0.0f);
-    configParam(Delay::FEEDBACK_A_PARAM, -1.0f, 1.0f, 0.0f, "Feedback", "%", 0.0f, 100.0f);
-    configParam(Delay::LP_A_PARAM, 0.0f, 1.0f, 1.0f, "Cutoff", "Hz", 10.0f, 1e3, 0.0f);
-    configParam(Delay::HP_A_PARAM, 0.0f, 1.0f, 0.0f, "Cutoff", "Hz", 10.0f, 1e3, 0.0f);
-    configParam(Delay::MIX_A_PARAM, 0.0f, 1.0f, 0.5f, "Dry/Wet", "%", 0.0f, 100.0f);
-    configParam(Delay::SYNCB_PARAM, 0.0f, 1.0f, 0.0f, "Sync");
-    configParam(Delay::CLEAR_B, 0.0f, 1.0f, 0.0f, "Clear");
-    configParam(Delay::LEVEL_B, 0.0f, 1.0f, 0.5f, "Level", "%", 0.0f, 100.0f);
-    configParam(Delay::CROSSFEED_B, 0.0f, 1.0f, 0.0f, "Crossfeed", "%", 0.0f, 100.0f);
-    configParam(Delay::TIME_B_PARAM, 0.0f, 1.0f, 0.6748f, "Time Delay", "ms", (10.0f / 1e-3), 1.0f, 0.0f);
-    configParam(Delay::FEEDBACK_B_PARAM, -1.0f, 1.0f, 0.0f, "Feedback", "%", 0.0f, 100.0f);
-    configParam(Delay::LP_B_PARAM, 0.0f, 1.0f, 1.0f, "Cutoff", "Hz", 10.0f, 1e3, 0.0f);
-    configParam(Delay::HP_B_PARAM, 0.0f, 1.0f, 0.0f, "Cutoff", "Hz", 10.0f, 1e3, 0.0f);
-    configParam(Delay::MIX_B_PARAM, 0.0f, 1.0f, 0.5f, "Dry/Wet", "%", 0.0f, 100.0f);
+		configParam(Delay::SYNCA_PARAM, 0.0f, 1.0f, 0.0f, "Sync");
+		configParam(Delay::CLEAR_A, 0.0f, 1.0f, 0.0f, "Clear");
+		configParam(Delay::LEVEL_A, 0.0f, 1.0f, 0.5f, "Level", "%", 0.0f, 100.0f);
+		configParam(Delay::CROSSFEED_A, 0.0f, 1.0f, 0.0f, "Crossfeed", "%", 0.0f, 100.0f);
+		configParam(Delay::TIME_A_PARAM, 0.0f, 1.0f, 0.6748f, "Time Delay", "ms", (10.0f / 1e-3), 1.0f, 0.0f);
+		configParam(Delay::FEEDBACK_A_PARAM, -1.0f, 1.0f, 0.0f, "Feedback", "%", 0.0f, 100.0f);
+		configParam(Delay::LP_A_PARAM, 0.0f, 1.0f, 1.0f, "Cutoff", "Hz", 10.0f, 1e3, 0.0f);
+		configParam(Delay::HP_A_PARAM, 0.0f, 1.0f, 0.0f, "Cutoff", "Hz", 10.0f, 1e3, 0.0f);
+		configParam(Delay::MIX_A_PARAM, 0.0f, 1.0f, 0.5f, "Dry/Wet", "%", 0.0f, 100.0f);
+		configParam(Delay::SYNCB_PARAM, 0.0f, 1.0f, 0.0f, "Sync");
+		configParam(Delay::CLEAR_B, 0.0f, 1.0f, 0.0f, "Clear");
+		configParam(Delay::LEVEL_B, 0.0f, 1.0f, 0.5f, "Level", "%", 0.0f, 100.0f);
+		configParam(Delay::CROSSFEED_B, 0.0f, 1.0f, 0.0f, "Crossfeed", "%", 0.0f, 100.0f);
+		configParam(Delay::TIME_B_PARAM, 0.0f, 1.0f, 0.6748f, "Time Delay", "ms", (10.0f / 1e-3), 1.0f, 0.0f);
+		configParam(Delay::FEEDBACK_B_PARAM, -1.0f, 1.0f, 0.0f, "Feedback", "%", 0.0f, 100.0f);
+		configParam(Delay::LP_B_PARAM, 0.0f, 1.0f, 1.0f, "Cutoff", "Hz", 10.0f, 1e3, 0.0f);
+		configParam(Delay::HP_B_PARAM, 0.0f, 1.0f, 0.0f, "Cutoff", "Hz", 10.0f, 1e3, 0.0f);
+		configParam(Delay::MIX_B_PARAM, 0.0f, 1.0f, 0.5f, "Dry/Wet", "%", 0.0f, 100.0f);
+		configInput(CLEAR_A_INPUT, "Clear (A)");
+		configInput(CLEAR_B_INPUT, "Clear (B)");
+		configInput(CLOCK_INPUT, "Clock");
+		configInput(TIME_A_INPUT, "Time Delay Control Voltage (A)");
+		configInput(FEEDBACK_A_INPUT, "Feedback Control Voltage (A)");
+		configInput(LP_A_INPUT, "Low-Pass Cutoff Control Voltage (A)");
+		configInput(HP_A_INPUT, "Hi-Pass Cutoff Control Voltage (A)");
+		configInput(MIX_A_INPUT, "Dry/Wet Control Voltage (A)");
+		configInput(IN_A_INPUT, "Master (A)");
+		configInput(TIME_B_INPUT, "Time Delay Control Voltage (B)");
+		configInput(FEEDBACK_B_INPUT, "Feedback Control Voltage (B)");
+		configInput(LP_B_INPUT, "Low-Pass Cutoff Control Voltage (B)");
+		configInput(HP_B_INPUT, "Hi-pass Cutoff Control Voltage (B)");
+		configInput(MIX_B_INPUT, "Dry/Wet Control Voltage (B)");
+		configInput(IN_B_INPUT, "Master (B)");
+		configOutput(OUT_A_OUTPUT, "Master (A)");
+		configOutput(WET_A_OUTPUT, "Wet Only (A)");
+		configOutput(OUT_B_OUTPUT, "Master (B)");
+		configOutput(WET_B_OUTPUT, "Wet Only (B)");
 		historyBufferA.clear();
 		historyBufferB.clear();
 		smofilterA.reset();
 		smofilterB.reset();
-
 	}
 
 	void process(const ProcessArgs& args) override;

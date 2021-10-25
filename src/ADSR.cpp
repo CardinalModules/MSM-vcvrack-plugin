@@ -68,6 +68,19 @@ struct ADSR : Module {
 		configParam(ADSR::ATT_SHAPE, 0.1f, 4.0f, 1.0f, "Attack Shape");
 		configParam(ADSR::DEC_SHAPE, 0.1f, 4.0f, 1.0f, "Decay Shape");
 		configParam(ADSR::REL_SHAPE, 0.1f, 4.0f, 1.0f, "Release Shape");
+		configInput(ATTACK_INPUT, "Attack Control Voltage");
+		configInput(DECAY_INPUT, "Decay Control Voltage");
+		configInput(SUSTAIN_INPUT, "Sustain Control Voltage");
+		configInput(RELEASE_INPUT, "Release Control Voltage");
+		configInput(DEC_SHAPE_CV, "Decay Shape Control Voltage");
+		configInput(GATE_INPUT, "Gate");
+		configInput(TRIG_INPUT, "Trigger");
+		configOutput(ENVELOPE_OUTPUT, "Envelope");
+		configOutput(INV_OUTPUT, "Inverted Envelope");
+		configOutput(EOA, "Attack Period");
+		configOutput(EOD, "Decay Period");
+		configOutput(EOS, "Sustain Period");
+		configOutput(EOR, "Release Period");
 		onReset();
 		onSampleRateChange();
 	}

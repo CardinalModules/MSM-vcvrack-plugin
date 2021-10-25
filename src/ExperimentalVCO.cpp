@@ -60,7 +60,16 @@ struct ExperimentalVCO : Module {
 		configParam(ExperimentalVCO::TYPE, 0.0, 13.0, 0.0, "Type", "", 0.0f, 1.0f, 1.0f);
 		configParam(ExperimentalVCO::WINDOW, 512.0, 2047.0, 1024.0, "Window Size");
 		configParam(ExperimentalVCO::FM_PARAM, -1.0, 1.0, 0.0, "FM CV", "%", 0.0f, 100);
-
+		configInput(WINDOW_CV, "Window Size Control Voltage");
+		configInput(TYPE_INPUT, "Waveform Base Type Control Voltage");
+		configInput(RESET_INPUT, "Reset");
+		configInput(LIN_INPUT, "FM");
+		configInput(VOCT_INPUT, "Volt/Octave");
+		configInput(MOD1_CV, "Modulation 1 Control Voltage");
+		configInput(MOD2_CV, "Modulation 2 Control Voltage");
+		configInput(MOD3_CV, "Modulation 3 Control Voltage");
+		configOutput(OUTPUT, "Master");
+		getParamQuantity(LFOMODE)->randomizeEnabled = false;
 	}
 
 	void process(const ProcessArgs& args) override;
@@ -226,7 +235,7 @@ ExperimentalVCOWidget::ExperimentalVCOWidget(ExperimentalVCO *module) {
 
 	pEspenBack = new MSMLightPanel();
 	pEspenBack->box.size = box.size;
-	pEspenBack->backgroundImage = (APP->window->loadImage(asset::plugin(pluginInstance, "res/Panels/MSVCO-Espen-Back.png")));
+	pEspenBack->imagePath = asset::plugin(pluginInstance, "res/Panels/MSVCO-Espen-Back.png");
 	pEspenBack->visible = false;
 	addChild(pEspenBack);
 
@@ -238,7 +247,7 @@ ExperimentalVCOWidget::ExperimentalVCOWidget(ExperimentalVCO *module) {
 
 	pOmriBack = new MSMLightPanel();
 	pOmriBack->box.size = box.size;
-	pOmriBack->backgroundImage = (APP->window->loadImage(asset::plugin(pluginInstance, "res/Panels/MSVCO-Omri-Back.png")));
+	pOmriBack->imagePath = asset::plugin(pluginInstance, "res/Panels/MSVCO-Omri-Back.png");
 	pOmriBack->visible = false;
 	addChild(pOmriBack);
 

@@ -59,6 +59,16 @@ struct Morpher : Module
     config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
     configParam(Morpher::MORPH_PARAM, 0.0, 1.0, 0.0, "Morph Control", "%", 0.0f, 100);
     configParam(Morpher::SWITCHCOUNT, 0.0, 6.0, 0.0, "Input Count", "", 0.0f, 1.0f, 2);
+	configInput(INPUT1, "#1");
+	configInput(INPUT2, "#2");
+	configInput(INPUT3, "#3");
+	configInput(INPUT4, "#4");
+	configInput(INPUT5, "#5");
+	configInput(INPUT6, "#6");
+	configInput(INPUT7, "#7");
+	configInput(INPUT8, "#8");
+	configInput(MORPH_CV, "Morph Control Voltage");
+	configOutput(OUTPUT, "Master");
   }
 
   void process(const ProcessArgs& args) override;

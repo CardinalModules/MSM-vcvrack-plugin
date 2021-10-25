@@ -45,6 +45,9 @@ struct Noise : Module {
 		configParam(Noise::LP_PARAM, 0.0, 1.0, 1.0, "Cutoff", "Hz", 5.0f, 1e4, 0.0f);
 		configParam(Noise::HP_PARAM, 0.0, 1.0, 0.0, "Cutoff", "Hz", 5.0f, 500.0f, 0.0f);
 		configParam(Noise::MIX_PARAM, 0.0, 1.0, 0.5, "Mix");
+		configInput(CV_INPUT, "Noise Amplitude Control Voltage");
+		configOutput(WNOISE_OUTPUT, "Noise");
+		configOutput(CNOISE_OUTPUT, "Colored Noise");
 	}
 
 	void process(const ProcessArgs& args) override;

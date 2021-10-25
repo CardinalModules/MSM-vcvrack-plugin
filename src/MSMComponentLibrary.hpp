@@ -117,7 +117,7 @@ struct MSMToggleKnob : SvgKnob {
 	}
 
 	void onChange(const event::Change &e) override {
-    paramQuantity->setValue(roundf(paramQuantity->getValue()));
+    getParamQuantity()->setValue(roundf(getParamQuantity()->getValue()));
     SvgKnob::onChange(e);
   }
 };
@@ -160,7 +160,7 @@ struct MSMToggle2Knob : SvgKnob {
 	}
 
 	void onChange(const event::Change &e) override {
-    paramQuantity->setValue(roundf(paramQuantity->getValue()));
+    getParamQuantity()->setValue(roundf(getParamQuantity()->getValue()));
     SvgKnob::onChange(e);
   }
 };
@@ -282,7 +282,6 @@ struct ToggleMe2 : SvgSwitch {
 	{
 
 	}
-	void randomize() override {}
 };
 
 struct MThree : ToggleMe {
@@ -305,13 +304,6 @@ struct VioMSwitch : ToggleMe {
 	VioMSwitch() {
 		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Switch/VioMSwitch_0.svg")));
 		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Switch/VioMSwitch_1.svg")));
-	}
-};
-
-struct VioMVertSwitch : ToggleMe2 {
-	VioMVertSwitch() {
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Switch/VioMSwitchVert_0.svg")));
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Switch/VioMSwitchVert_1.svg")));
 	}
 };
 
@@ -467,8 +459,9 @@ struct MBlueLight : MGrayModuleLightWidget {
 
 struct MSMPanel : TransparentWidget {
   NVGcolor backgroundColor;
-  std::shared_ptr<Image> backgroundImage;
+  std::string imagePath;
 	void draw(const DrawArgs &args) override {
+      std::shared_ptr<Image> backgroundImage = APP->window->loadImage(imagePath);
 	  nvgBeginPath(args.vg);
 	  nvgRect(args.vg, 0.0, 0.0, box.size.x, box.size.y);
 

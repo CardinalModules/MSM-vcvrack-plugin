@@ -515,6 +515,11 @@ struct PhaserModule : Module {
     configParam(PhaserModule::LFODEPTH, 0.0, 1.0, 0.1, "LFO Depth");
     configParam(PhaserModule::PW_PARAM, 0.0, 1.0, 0.5, "Pulse Width", "%", 0.f, 100);
     configParam(PhaserModule::DEPTH_PARAM, 0.0, 1.0, 0.5, "Depth");
+	configInput(LOW_INPUT, "Low-pass Control Voltage");
+	configInput(HIGH_INPUT, "Hi-pass Control Voltage");
+	configInput(LFODEPTH_INPUT, "LFO Depth Control Voltage");
+	configInput(INPUT, "Master");
+	configOutput(OUTPUT, "Master");
   }
 
 	void process(const ProcessArgs& args) override;

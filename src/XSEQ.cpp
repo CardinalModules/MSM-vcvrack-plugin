@@ -84,6 +84,27 @@ struct xseq : Module {
 		configParam(xseq::BUT7_PARAM, 0.0, 1.0, 0.0, "Logic Select");
 		configParam(xseq::BUT8_PARAM, 0.0, 1.0, 0.0, "Logic Select");
 		configParam(xseq::BUT9_PARAM, 0.0, 1.0, 0.0, "Logic Select");
+		configInput(IN1_INPUT, "Clock/LFO #1");
+		configInput(IN2_INPUT, "Clock/LFO #2");
+		configInput(IN3_INPUT, "Clock/LFO #3");
+		configOutput(NOR1_OUTPUT, "#1");
+		configOutput(NAND1_OUTPUT, "#2");
+		configOutput(OR1_OUTPUT, "#3");
+		configOutput(NAND2_OUTPUT, "#4");
+		configOutput(AND1_OUTPUT, "#5");
+		configOutput(AND2_OUTPUT, "#6");
+		configOutput(XOR1_OUTPUT, "#7");
+		configOutput(NOR2_OUTPUT, "#8");
+		configOutput(XNOR1_OUTPUT, "#9");
+		configInput(B1_INPUT, "Button #1 Control Voltage");
+		configInput(B2_INPUT, "Button #2 Control Voltage");
+		configInput(B3_INPUT, "Button #3 Control Voltage");
+		configInput(B4_INPUT, "Button #4 Control Voltage");
+		configInput(B5_INPUT, "Button #5 Control Voltage");
+		configInput(B6_INPUT, "Button #6 Control Voltage");
+		configInput(B7_INPUT, "Button #7 Control Voltage");
+		configInput(B8_INPUT, "Button #8 Control Voltage");
+		configInput(B9_INPUT, "Button #9 Control Voltage");
 	}
 
 	void process(const ProcessArgs& args) override;

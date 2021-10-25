@@ -38,6 +38,14 @@ struct RingMod : Module
     config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
     configParam(RingMod::MIXA, 0.0f, 1.0f, 0.5f, "Modulation", "%", 0.f, 100);
     configParam(RingMod::MIXB, 0.0f, 1.0f, 0.5f, "Modulation", "%", 0.f, 100);
+	configInput(MIXA_CV, "(A) Modulation Level Control Voltage");
+	configInput(MODULATOR_A, "(A) Modulator");
+	configInput(CARRIER_A, "(A) Carrier");
+	configOutput(OUTPUT_A, "(A) Master");
+	configInput(MIXB_CV, "(B) Modulation Level Control Voltage");
+	configInput(MODULATOR_B, "(B) Modulator");
+	configInput(CARRIER_B, "(B) Carrier");
+	configOutput(OUTPUT_B, "(B) Master");
   }
 
   void process(const ProcessArgs& args) override;

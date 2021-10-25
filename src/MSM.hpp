@@ -1,6 +1,5 @@
 // INCLUDES
 #include "rack.hpp"
-#include "app.hpp"
 #include "asset.hpp"
 
 #include <math.h>

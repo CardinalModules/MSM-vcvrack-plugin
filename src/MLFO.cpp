@@ -73,9 +73,25 @@ struct LFO : Module {
 		configParam(LFO::WAVE_A_PARAM, 0.0, 4.0, 0.0, "Wave Type");
 		configParam(LFO::WAVE_B_PARAM, 0.0, 4.0, 0.0, "Wave Type");
 		configParam(LFO::MIX_PARAM, 0.0, 1.0, 0.5, "Crossfeed");
-	}
-
-	void process(const ProcessArgs& args) override;
+		configInput(FM_1_INPUT, "(A) FM");
+		configInput(RESET_INPUT, "Reset");
+		configInput(WAVE_A_INPUT, "(A) Wave Type Control Voltage");
+		configOutput(LFO_A_OUTPUT, "(A) Master");
+		configOutput(SIN_OUTPUT, "(A) Sin");
+		configOutput(TRI_OUTPUT, "(A) Triangle");
+		configOutput(SH_OUTPUT, "(A) Random Staircase");
+		configInput(FM_2_INPUT, "(B) FM");
+		configInput(WAVE_B_INPUT, "(B) Wave Type Control Voltage");
+		configOutput(LFO_B_OUTPUT, "(B) Master");
+		configOutput(SAW_2_OUTPUT, "(B) Sawtooth");
+		configOutput(SQR_2_OUTPUT, "(B) Square");
+		configInput(CV_MIX_INPUT, "Mix Crossfeed Control Voltage");
+		configOutput(OUT_MIX_OUTPUT, "Crossfeed");
+		getParamQuantity(INVERT_1_PARAM)->randomizeEnabled = false;
+		getParamQuantity(OFFSET_2_PARAM)->randomizeEnabled = false;
+		getParamQuantity(INVERT_2_PARAM)->randomizeEnabled = false;
+		getParamQuantity(OFFSET_1_PARAM)->randomizeEnabled = false;
+	}	void process(const ProcessArgs& args) override;
 
 	//Json for Panel Theme
 	json_t *dataToJson() override	{

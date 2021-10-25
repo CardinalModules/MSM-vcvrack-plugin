@@ -40,6 +40,16 @@ struct Fade : Module {
 		configParam(Fade::CF_A_PARAM, 0.0, 1.0, 0.5, "A");
 		configParam(Fade::CF_B_PARAM, 0.0, 1.0, 0.5, "B");
 		configParam(Fade::CF_AB_PARAM, 0.0, 1.0, 0.5, "AB");
+		configInput(IN_1_INPUT, "(A) Fader #1");
+		configInput(IN_2_INPUT, "(A) Fader #2");
+		configInput(IN_3_INPUT, "(B) Fader #3");
+		configInput(IN_4_INPUT, "(B) Fader #4");
+		configInput(CVA_INPUT, "(A) Fader Control Voltage");
+		configInput(CVB_INPUT, "(B) Fader Control Voltage");
+		configInput(CVAB_INPUT, "(AB) Fader Control Voltage");
+		configOutput(OUT_A_OUTPUT, "(A) Fader");
+		configOutput(OUT_B_OUTPUT, "(B) Fader");
+		configOutput(OUT_AB_OUTPUT, "(AB) Fader");
 	}
 
 	void process(const ProcessArgs& args) override;

@@ -50,6 +50,30 @@ struct Mult : Module
 			configParam(Mult::MODE1_PARAM, 0.0, 1.0, 1.0, "Add/Sub");
 			configParam(Mult::MODE2_PARAM, 0.0, 1.0, 1.0, "Add/Sub");
 			configParam(Mult::MODE3_PARAM, 0.0, 1.0, 1.0, "Add/Sub");
+			configInput(IN_1_INPUT, "A1");
+			configInput(IN_2_INPUT, "A2");
+			configInput(IN_3_INPUT, "B1");
+			configInput(IN_4_INPUT, "B2");
+			configInput(IN_5_INPUT, "C1");
+			configInput(IN_6_INPUT, "C2");
+			configOutput(OUT_11_OUTPUT, "A1");
+			configOutput(OUT_12_OUTPUT, "A2");
+			configOutput(OUT_13_OUTPUT, "A3");
+			configOutput(OUT_14_OUTPUT, "A4");
+			configOutput(OUT_15_OUTPUT, "A5");
+			configOutput(OUT_16_OUTPUT, "A6");
+			configOutput(OUT_21_OUTPUT, "B1");
+			configOutput(OUT_22_OUTPUT, "B2");
+			configOutput(OUT_23_OUTPUT, "B3");
+			configOutput(OUT_24_OUTPUT, "B4");
+			configOutput(OUT_25_OUTPUT, "B5");
+			configOutput(OUT_26_OUTPUT, "B6");
+			configOutput(OUT_31_OUTPUT, "C1");
+			configOutput(OUT_32_OUTPUT, "C2");
+			configOutput(OUT_33_OUTPUT, "C3");
+			configOutput(OUT_34_OUTPUT, "C4");
+			configOutput(OUT_35_OUTPUT, "C5");
+			configOutput(OUT_36_OUTPUT, "C6");
 		}
 
 		void process(const ProcessArgs& args) override;

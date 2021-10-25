@@ -66,6 +66,13 @@ struct Wavefolder : Module {
 		configParam(Wavefolder::DOWN_PARAM, 0.0, 1.0, 0.0, "Lower Shape");
 		configParam(Wavefolder::GAIN_PARAM, 0.0, 1.0, 0.0, "Fold Gain");
 		configParam(Wavefolder::GAIN_CV_PARAM, -1.0, 1.0, 0.0, "Fold Gain CV");
+		configInput(UP_INPUT, "Asymmetric Up Folding Control Voltage");
+		configInput(DOWN_INPUT, "Asymmetric Down Folding Control Voltage");
+		configInput(GAIN_INPUT, "Fold Gain Control Voltage");
+		configInput(SHAPE_CV_INPUT, "Fold Shape Control Voltage");
+		configInput(IN_INPUT, "Master");
+		configOutput(OUT_OUTPUT, "Master");
+		getParamQuantity(TYPESWITCH)->randomizeEnabled = false;
 	}
 
 	void process(const ProcessArgs& args) override;

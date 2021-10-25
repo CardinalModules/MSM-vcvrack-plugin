@@ -1,8 +1,8 @@
-# MSM VCV Rack Modules - Version 1.X
+# MSM VCV Rack Modules - Version 2.0.0
 
 ![](doc/img/FullCluster.png)
 ***
-This plugin contains a set of modules written by Phal-anx. Originally this plugin was closed-source, but Phal-anx kindly decided to open-source the project. The plugin has been ported to V1 and maintained by Netboy3. Please report any issues on this GitHub repo [issue tracker](https://github.com/netboy3/MSM-vcvrack-plugin/issues).
+This plugin contains a set of modules written by Phal-anx. Originally this plugin was closed-source, but Phal-anx kindly decided to open-source the project. The plugin has been ported to V1, re-ported to V2 and is maintained by Netboy3. Please report any issues on this GitHub repo [issue tracker](https://github.com/netboy3/MSM-vcvrack-plugin/issues).
 
 _Please note_: Unless otherwise noted, CV inputs are scaled as 0-10V and are summed with their corresponding mechanical control function/knob.
 

@@ -1,4 +1,4 @@
-# MSM VCV Rack Modules - Version 2.0.0
+# MSM VCV Rack Modules - Version 2.0.1
 
 ![](doc/img/FullCluster.png)
 ***

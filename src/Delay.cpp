@@ -513,7 +513,6 @@ void Delay::process(const ProcessArgs& args) {
 struct DisplayWidget : TransparentWidget {
 
 	int *value = nullptr;
-	std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Crysta.ttf"));
 
 	DisplayWidget()
 	{
@@ -532,37 +531,39 @@ struct DisplayWidget : TransparentWidget {
 		nvgStrokeColor(args.vg, borderColor);
 		nvgStroke(args.vg);
 		// text
-		nvgFontSize(args.vg, 16);
-		nvgFontFaceId(args.vg, font->handle);
-		nvgTextLetterSpacing(args.vg, 2.5);
+		std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Crysta.ttf"));
+		if (font) {
+			nvgFontSize(args.vg, 16);
+			nvgFontFaceId(args.vg, font->handle);
+			nvgTextLetterSpacing(args.vg, 2.5);
 
-		std::stringstream to_display;
-    if (value) {
-		  to_display << std::left << std::setw(5) << *value;
-    } else {
-      to_display << std::left << std::setw(5) << 500;
-    }
+			std::stringstream to_display;
+			if (value) {
+				to_display << std::left << std::setw(5) << *value;
+			} else {
+			to_display << std::left << std::setw(5) << 500;
+			}
 
-		Vec textPos = Vec(3.0f, 17.0f);
+			Vec textPos = Vec(3.0f, 17.0f);
 
-		NVGcolor textColor = nvgRGB(12, 216, 255);
-		nvgFillColor(args.vg, nvgTransRGBA(textColor, 16));
-		nvgText(args.vg, textPos.x, textPos.y, "", NULL);
+			NVGcolor textColor = nvgRGB(12, 216, 255);
+			nvgFillColor(args.vg, nvgTransRGBA(textColor, 16));
+			nvgText(args.vg, textPos.x, textPos.y, "", NULL);
 
-		textColor = nvgRGB(0xda, 0xe9, 0x29);
-		nvgFillColor(args.vg, nvgTransRGBA(textColor, 16));
-		nvgText(args.vg, textPos.x, textPos.y, "", NULL);
+			textColor = nvgRGB(0xda, 0xe9, 0x29);
+			nvgFillColor(args.vg, nvgTransRGBA(textColor, 16));
+			nvgText(args.vg, textPos.x, textPos.y, "", NULL);
 
-		textColor = nvgRGB(12, 216, 255);
-		nvgFillColor(args.vg, textColor);
-		nvgText(args.vg, textPos.x, textPos.y, to_display.str().c_str(), NULL);
+			textColor = nvgRGB(12, 216, 255);
+			nvgFillColor(args.vg, textColor);
+			nvgText(args.vg, textPos.x, textPos.y, to_display.str().c_str(), NULL);
+		}
 	}
 };
 
 struct TRatioADisplay : TransparentWidget {
 
 	Delay *module{};
-	std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Crysta.ttf"));;
 
 	TRatioADisplay()
 	{
@@ -582,16 +583,20 @@ struct TRatioADisplay : TransparentWidget {
   		nvgStrokeColor(vg, borderColor);
   		nvgStroke(vg);
 
-  		nvgFontSize(vg, 16);
-  		nvgFontFaceId(vg, font->handle);
-  		nvgTextLetterSpacing(vg, -2);
+		// Text
+		std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Crysta.ttf"));;
+		if (font) {
+			nvgFontSize(vg, 16);
+			nvgFontFaceId(vg, font->handle);
+			nvgTextLetterSpacing(vg, -2);
 
-  		Vec textPos = Vec(3.0f, 17.0f);
+			Vec textPos = Vec(3.0f, 17.0f);
 
-  		nvgFillColor(vg, nvgRGB(12, 216, 255));
-  		char text[128];
-  		snprintf(text, sizeof(text), "%s", module->divisionNames[division]);
-  		nvgText(vg, textPos.x, textPos.y, text, NULL);
+			nvgFillColor(vg, nvgRGB(12, 216, 255));
+			char text[128];
+			snprintf(text, sizeof(text), "%s", module->divisionNames[division]);
+			nvgText(vg, textPos.x, textPos.y, text, NULL);
+		}
   }
 	}
 
@@ -605,7 +610,6 @@ struct TRatioADisplay : TransparentWidget {
 struct TRatioBDisplay : TransparentWidget {
 
 	Delay *module{};
-	std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Crysta.ttf"));
 
 	TRatioBDisplay()
 	{
@@ -626,16 +630,19 @@ struct TRatioBDisplay : TransparentWidget {
   		nvgStrokeColor(vg, borderColor);
   		nvgStroke(vg);
 
-  		nvgFontSize(vg, 16);
-  		nvgFontFaceId(vg, font->handle);
-  		nvgTextLetterSpacing(vg, -2);
+		std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Crysta.ttf"));
+		if (font) {
+			nvgFontSize(vg, 16);
+			nvgFontFaceId(vg, font->handle);
+			nvgTextLetterSpacing(vg, -2);
 
-  		Vec textPos = Vec(3.0f, 17.0f);
+			Vec textPos = Vec(3.0f, 17.0f);
 
-  		nvgFillColor(vg, nvgRGB(12, 216, 255));
-  		char text[128];
-  		snprintf(text, sizeof(text), "%s", module->divisionNames[division]);
-  		nvgText(vg, textPos.x, textPos.y, text, NULL);
+			nvgFillColor(vg, nvgRGB(12, 216, 255));
+			char text[128];
+			snprintf(text, sizeof(text), "%s", module->divisionNames[division]);
+			nvgText(vg, textPos.x, textPos.y, text, NULL);
+		}
     }
 	}
 

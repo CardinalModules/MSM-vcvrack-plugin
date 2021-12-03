@@ -327,22 +327,6 @@ struct FMSM : ToggleMe {
 // Button
 /////////////////////////
 
-struct MSwitchGrey : SvgSwitch {
-	MSwitchGrey() {
-		momentary = true;
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Button/GreyRoundButton_0.svg")));
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Button/GreyRoundButton_1.svg")));
-	}
-};
-
-struct MSwitchGrey2 : SvgSwitch {
-	MSwitchGrey2() {
-		momentary = true;
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Button/GreyRoundButtonBlue_0.svg")));
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Button/GreyRoundButtonBlue_1.svg")));
-	}
-};
-
 struct MToggleGrey : SvgSwitch {
 	MToggleGrey() {
 		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Button/GreyRoundToggle_0.svg")));

@@ -145,6 +145,8 @@ struct Delay : Module {
 
 	dsp::SchmittTrigger clockTriggerA, clockTriggerB;
 	dsp::SchmittTrigger clear_a, clear_b;
+	dsp::ClockDivider lightDividerA, lightDividerB;
+	dsp::Timer clearLightTimerA, clearLightTimerB;
 
 	float clearA_light = 0.0f;
 	float clearB_light = 0.0f;
@@ -205,6 +207,8 @@ struct Delay : Module {
 		historyBufferB.clear();
 		smofilterA.reset();
 		smofilterB.reset();
+		lightDividerA.setDivision(128);
+		lightDividerB.setDivision(128);
 	}
 
 	void process(const ProcessArgs& args) override;
@@ -361,10 +365,19 @@ void Delay::process(const ProcessArgs& args) {
 
     }
 
-	if(clear_a.process(clamp(params[CLEAR_A].getValue() + inputs[CLEAR_A_INPUT].getVoltage() / 10.0f, 0.0f, 1.0f))) {
+	if (clear_a.process(clamp(params[CLEAR_A].getValue() + inputs[CLEAR_A_INPUT].getVoltage() / 10.0f, 0.0f, 1.0f))) {
 		historyBufferA.clear();
+		clearLightTimerA.reset();
+		lights[CLEAR_A_LIGHT].setBrightness(1.0f);
 	}
-
+	if (lightDividerA.process()) {
+		if (lights[CLEAR_A_LIGHT].getBrightness() > 0.5f) {
+			clearLightTimerA.process(args.sampleTime);
+		}
+		if (clearLightTimerA.getTime() > 0.002f) {
+			lights[CLEAR_A_LIGHT].setBrightness(0.0f);
+		}
+	}
 
 	float wetA = 0.0f;
 	if (!outBufferA.empty()) {
@@ -464,11 +477,19 @@ void Delay::process(const ProcessArgs& args) {
 
 	}
 
-	if(clear_b.process(clamp(params[CLEAR_B].getValue() + inputs[CLEAR_B_INPUT].getVoltage() / 10.0f, 0.0f, 1.0f))) {
+	if (clear_b.process(clamp(params[CLEAR_B].getValue() + inputs[CLEAR_B_INPUT].getVoltage() / 10.0f, 0.0f, 1.0f))) {
 		historyBufferB.clear();
+		clearLightTimerB.reset();
+		lights[CLEAR_B_LIGHT].setBrightness(1.0f);
 	}
-
-
+	if (lightDividerB.process()) {
+		if (lights[CLEAR_B_LIGHT].getBrightness() > 0.5f) {
+			clearLightTimerB.process(args.sampleTime);
+		}
+		if (clearLightTimerB.getTime() > 0.002f) {
+			lights[CLEAR_B_LIGHT].setBrightness(0.0f);
+		}
+	}
 
 	float wetB = 0.0f;
 	if (!outBufferB.empty()) {
@@ -753,7 +774,7 @@ DelayWidget::DelayWidget(Delay *module) {
 	addChild(createWidget<MScrewB>(Vec(box.size.x-30, 365)));
 
 	addParam(createParam<VioMSwitch>(Vec(33, 99), module, Delay::SYNCA_PARAM));
-	addParam(createParam<MSwitchGrey2>(Vec(39, 19), module, Delay::CLEAR_A));
+	addParam(createLightParamCentered<VCVLightBezel<RedLight>>(Vec(50, 33), module, Delay::CLEAR_A, Delay::CLEAR_A_LIGHT));
 	addInput(createInput<SilverSixPortB>(Vec(12, 20.5), module, Delay::CLEAR_A_INPUT));
 
 	addParam(createParam<RedSmallKnob>(Vec(145, 254), module, Delay::LEVEL_A));
@@ -767,7 +788,7 @@ DelayWidget::DelayWidget(Delay *module) {
 	addParam(createParam<GreenLargeKnob>(Vec(77, 261), module, Delay::MIX_A_PARAM));
 
 	addParam(createParam<VioMSwitch>(Vec(329, 99), module, Delay::SYNCB_PARAM));
-	addParam(createParam<MSwitchGrey2>(Vec(box.size.x-67, 19), module, Delay::CLEAR_B));
+	addParam(createLightParamCentered<VCVLightBezel<RedLight>>(Vec(box.size.x-50, 33), module, Delay::CLEAR_B, Delay::CLEAR_B_LIGHT));
 	addInput(createInput<SilverSixPortC>(Vec(box.size.x-37, 20.5), module, Delay::CLEAR_B_INPUT));
 
 	addParam(createParam<RedSmallKnob>(Vec(199, 254), module, Delay::LEVEL_B));

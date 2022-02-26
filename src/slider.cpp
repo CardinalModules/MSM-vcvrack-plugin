@@ -21,7 +21,7 @@ struct SimpleSlider : Module {
 		NUM_OUTPUTS
 	};
 
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 
 	SimpleSlider() {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS);
@@ -115,13 +115,13 @@ SimpleSliderWidget::SimpleSliderWidget(SimpleSlider *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/SimpleSlider.svg")));
-	panelClassic->visible = true;
+	panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/SimpleSlider-Dark.svg")));
-	panelNightMode->visible = false;
+	panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 

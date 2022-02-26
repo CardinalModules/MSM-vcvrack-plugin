@@ -28,7 +28,7 @@ struct Noise : Module {
 	};
 
 	// Panel Theme
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 
 	VRand *VR = new VRand();
 
@@ -180,13 +180,13 @@ NoiseWidget::NoiseWidget(Noise *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/Noise.svg")));
-	panelClassic->visible = true;
+	panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/Noise-Dark.svg")));
-	panelNightMode->visible = false;
+	panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 	addChild(createWidget<MScrewD>(Vec(0, 0)));

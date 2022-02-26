@@ -88,7 +88,7 @@ struct CrazyMult : Module {
 		NUM_OUTPUTS
 	};
 
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 	int Type = 0;
 
 	//One op;
@@ -349,13 +349,13 @@ CrazyMultWidget::CrazyMultWidget(CrazyMult *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/CrazyMult.svg")));
-	panelClassic->visible = true;
+	panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/CrazyMult-Dark.svg")));
-	panelNightMode->visible = false;
+	panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 	int space = 25;

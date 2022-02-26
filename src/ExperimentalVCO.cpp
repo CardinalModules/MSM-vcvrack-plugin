@@ -43,7 +43,7 @@ struct ExperimentalVCO : Module {
 	int Oct = 0;
 
 	// Panel Theme
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 
 	ExperimentalVCO() {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS);
@@ -224,13 +224,13 @@ ExperimentalVCOWidget::ExperimentalVCOWidget(ExperimentalVCO *module) {
 	pClassic = new SvgPanel();
 	pClassic->box.size = box.size;
 	pClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/MSVCO.svg")));
-	pClassic->visible = true;
+	pClassic->visible = !THEME_DEFAULT;
 	addChild(pClassic);
 
 	pNightMode = new SvgPanel();
 	pNightMode->box.size = box.size;
 	pNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/MSVCO-Dark.svg")));
-	pNightMode->visible = false;
+	pNightMode->visible = !!THEME_DEFAULT;
 	addChild(pNightMode);
 
 	pEspenBack = new MSMLightPanel();

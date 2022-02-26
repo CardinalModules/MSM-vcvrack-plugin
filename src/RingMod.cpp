@@ -32,7 +32,7 @@ struct RingMod : Module
         NUM_LIGHTS
     };
 
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 
   RingMod() {
     config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
@@ -136,13 +136,13 @@ RingModWidget::RingModWidget(RingMod *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/RingMod.svg")));
-  panelClassic->visible = true;
+  panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/RingMod-Dark.svg")));
-  panelNightMode->visible = false;
+  panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
   addChild(createWidget<MScrewB>(Vec(0, 0)));

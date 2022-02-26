@@ -45,3 +45,9 @@ extern Model *modelFade;
 extern Model *modelSimpleSlider;
 extern Model *modelxseq;
 extern Model *modelBlankPanel;
+
+#ifdef DARKTHEME
+#define THEME_DEFAULT 1
+#else
+#define THEME_DEFAULT 0
+#endif

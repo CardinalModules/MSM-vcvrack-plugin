@@ -40,7 +40,7 @@ struct Morpher : Module
         NUM_LIGHTS
     };
 
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 
 	double Crossfader = 0.0f;
 	double In1 = 0.0f;
@@ -321,13 +321,13 @@ MorpherWidget::MorpherWidget(Morpher *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/Morpher.svg")));
-  panelClassic->visible = true;
+  panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/Morpher-Dark.svg")));
-  panelNightMode->visible = false;
+  panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
   addChild(createWidget<MScrewB>(Vec(0, 0)));

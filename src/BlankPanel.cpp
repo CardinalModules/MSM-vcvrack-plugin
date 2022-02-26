@@ -20,7 +20,7 @@ struct BlankPanel : Module {
 	};
 
 	// Panel Theme
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 
 	BlankPanel() {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
@@ -88,13 +88,13 @@ BlankPanelWidget::BlankPanelWidget(BlankPanel *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/BlankPanelLight.svg")));
-	panelClassic->visible = true;
+	panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/BlankPanelDark.svg")));
-	panelNightMode->visible = false;
+	panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 	addChild(createWidget<MScrewD>(Vec(15, 0)));

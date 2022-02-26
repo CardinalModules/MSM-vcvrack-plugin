@@ -29,7 +29,7 @@ struct RandomSource : Module {
 		double sample = 0.0;
 		double out = 0.0;
 
-		int Theme = 0;
+		int Theme = THEME_DEFAULT;
 
 		RandomSource() {
 			config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS);
@@ -155,13 +155,13 @@ RandomSourceWidget::RandomSourceWidget(RandomSource *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/RandomSource.svg")));
-	panelClassic->visible = true;
+	panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/RandomSource-Dark.svg")));
-	panelNightMode->visible = false;
+	panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 	//Screw

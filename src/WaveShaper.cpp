@@ -37,7 +37,7 @@ struct WaveShaper : Module {
 		NUM_LIGHTS
 	};
 
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 
 	double IN_M = 0.0f, IN_A = 0.0f, IN_B = 0.0f, IN_C = 0.0f;
 	double SHAPE_MOD1 = 0.0f, SHAPE_CV1 = 0.0f;
@@ -163,13 +163,13 @@ WaveShaperWidget::WaveShaperWidget(WaveShaper *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/WaveShaper.svg")));
-	panelClassic->visible = true;
+	panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/WaveShaper-Dark.svg")));
-	panelNightMode->visible = false;
+	panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 	addChild(createWidget<MScrewA>(Vec(15, 0)));

@@ -35,7 +35,7 @@ struct Wavefolder : Module {
 		NUM_LIGHTS
 	};
 
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 
 	double IN_1 = 0.0f;
 
@@ -169,13 +169,13 @@ WavefolderWidget::WavefolderWidget(Wavefolder *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/Wavefolder.svg")));
-	panelClassic->visible = true;
+	panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/Wavefolder-Dark.svg")));
-	panelNightMode->visible = false;
+	panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 	addChild(createWidget<MScrewA>(Vec(0, 0)));

@@ -129,7 +129,7 @@ struct Delay : Module {
 	dsp::RCFilter lowpassFilterB;
 	dsp::RCFilter highpassFilterB;
 
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 	int DISPLAYA = 0;
 	int DISPLAYB = 0;
 	/////////////////////////////////////
@@ -726,13 +726,13 @@ DelayWidget::DelayWidget(Delay *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/Delay.svg")));
-  panelClassic->visible = true;
+  panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/Delay-Dark.svg")));
-  panelNightMode->visible = false;
+  panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 	{

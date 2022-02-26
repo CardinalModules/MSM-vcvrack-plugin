@@ -38,7 +38,7 @@ struct VCA : Module {
 	float mixLP_A = 0.0f ? 0.0f : 0.0f;
 	float mixRP_A = 0.0f ? 0.0f : 0.0f;
 
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 	const float expBase = 50.0f;
 
 	VCA() {
@@ -232,13 +232,13 @@ VCAWidget::VCAWidget(VCA *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/VCA.svg")));
-	panelClassic->visible = true;
+	panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/VCA-Dark.svg")));
-	panelNightMode->visible = false;
+	panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 	addChild(createWidget<MScrewA>(Vec(15, 0)));

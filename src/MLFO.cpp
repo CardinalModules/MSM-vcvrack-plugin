@@ -57,7 +57,7 @@ struct LFO : Module {
 	float sample1 = 0.0;
 	float sample2 = 0.0;
 
-	int Theme = 0;
+	int Theme = THEME_DEFAULT;
 
 	LFO() {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS);
@@ -254,13 +254,13 @@ LFOWidget::LFOWidget(LFO *module) {
 	panelClassic = new SvgPanel();
 	panelClassic->box.size = box.size;
 	panelClassic->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/MLFO.svg")));
-	panelClassic->visible = true;
+	panelClassic->visible = !THEME_DEFAULT;
 	addChild(panelClassic);
 
 	panelNightMode = new SvgPanel();
 	panelNightMode->box.size = box.size;
 	panelNightMode->setBackground(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Panels/MLFO-Dark.svg")));
-	panelNightMode->visible = false;
+	panelNightMode->visible = !!THEME_DEFAULT;
 	addChild(panelNightMode);
 
 	addChild(createWidget<MScrewB>(Vec(15, 0)));

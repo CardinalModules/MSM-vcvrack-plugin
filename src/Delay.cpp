@@ -552,7 +552,7 @@ struct DisplayWidget : TransparentWidget {
 		nvgStrokeColor(args.vg, borderColor);
 		nvgStroke(args.vg);
 		// text
-		std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Crysta.ttf"));
+		std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Segment7Standard.ttf"));
 		if (font) {
 			nvgFontSize(args.vg, 16);
 			nvgFontFaceId(args.vg, font->handle);
@@ -605,7 +605,7 @@ struct TRatioADisplay : TransparentWidget {
   		nvgStroke(vg);
 
 		// Text
-		std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Crysta.ttf"));;
+		std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Segment7Standard.ttf"));;
 		if (font) {
 			nvgFontSize(vg, 16);
 			nvgFontFaceId(vg, font->handle);
@@ -651,7 +651,7 @@ struct TRatioBDisplay : TransparentWidget {
   		nvgStrokeColor(vg, borderColor);
   		nvgStroke(vg);
 
-		std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Crysta.ttf"));
+		std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Fonts/Segment7Standard.ttf"));
 		if (font) {
 			nvgFontSize(vg, 16);
 			nvgFontFaceId(vg, font->handle);

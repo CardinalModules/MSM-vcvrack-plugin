@@ -50,6 +50,10 @@ struct Noise : Module {
 		configOutput(CNOISE_OUTPUT, "Colored Noise");
 	}
 
+	~Noise() override {
+		delete VR;
+	}
+
 	void process(const ProcessArgs& args) override;
 
 

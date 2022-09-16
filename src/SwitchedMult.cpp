@@ -327,6 +327,7 @@ struct CrazyMultWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		CrazyMult *crazymult = dynamic_cast<CrazyMult*>(module);
 		assert(crazymult);
@@ -338,6 +339,7 @@ struct CrazyMultWidget : ModuleWidget {
 		menu->addChild(construct<TypeMenuPlus>(&TypeMenuPlus::text, "Positive", &TypeMenuPlus::crazymult, crazymult));
 		menu->addChild(construct<TypeMenuMinus>(&TypeMenuMinus::text, "Negative", &TypeMenuMinus::crazymult, crazymult));
 	}
+#endif
 
 	CrazyMultWidget(CrazyMult *module);
 	void step() override;
@@ -422,13 +424,17 @@ CrazyMultWidget::CrazyMultWidget(CrazyMult *module) {
 };
 
 void CrazyMultWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		CrazyMult *crazymult = dynamic_cast<CrazyMult*>(module);
 		assert(crazymult);
 		panelClassic->visible = (crazymult->Theme == 0);
 		panelNightMode->visible = (crazymult->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

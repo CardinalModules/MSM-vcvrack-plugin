@@ -150,6 +150,7 @@ struct WavefolderWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		Wavefolder *wavefolder = dynamic_cast<Wavefolder*>(module);
 		assert(wavefolder);
@@ -158,6 +159,7 @@ struct WavefolderWidget : ModuleWidget {
 		menu->addChild(construct<WFClassicMenu>(&WFClassicMenu::text, "Classic (default)", &WFClassicMenu::wavefolder, wavefolder));
 		menu->addChild(construct<WFNightModeMenu>(&WFNightModeMenu::text, "Night Mode", &WFNightModeMenu::wavefolder, wavefolder));
 	}
+#endif
 
 	WavefolderWidget(Wavefolder *module);
 	void step() override;
@@ -208,13 +210,17 @@ WavefolderWidget::WavefolderWidget(Wavefolder *module) {
 };
 
 void WavefolderWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		Wavefolder *wavefolder = dynamic_cast<Wavefolder*>(module);
 		assert(wavefolder);
 		panelClassic->visible = (wavefolder->Theme == 0);
 		panelNightMode->visible = (wavefolder->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

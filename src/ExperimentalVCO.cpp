@@ -202,6 +202,7 @@ struct ExperimentalVCOWidget : ModuleWidget {
 	MSMPanel *pOmriBack;
 	SvgPanel *pOmriFront;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		ExperimentalVCO *experimentalvco = dynamic_cast<ExperimentalVCO*>(module);
 		assert(experimentalvco);
@@ -212,6 +213,7 @@ struct ExperimentalVCOWidget : ModuleWidget {
 		menu->addChild(construct<ExperimentalVCOEspenMenu>(&ExperimentalVCOEspenMenu::text, "Espen's Treasure | Jedi", &ExperimentalVCOEspenMenu::experimentalvco, experimentalvco));
 		menu->addChild(construct<ExperimentalVCOOmriMenu>(&ExperimentalVCOOmriMenu::text, "Omri's Treasure | Mushroom", &ExperimentalVCOOmriMenu::experimentalvco, experimentalvco));
 	}
+#endif
 
 	ExperimentalVCOWidget(ExperimentalVCO *module);
 	void step() override;
@@ -297,19 +299,22 @@ ExperimentalVCOWidget::ExperimentalVCOWidget(ExperimentalVCO *module) {
 };
 
 void ExperimentalVCOWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	pClassic->visible = !settings::preferDarkPanels;
+	pNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		ExperimentalVCO *experimentalvco = dynamic_cast<ExperimentalVCO*>(module);
 		assert(experimentalvco);
 		pClassic->visible = (experimentalvco->Theme == 0);
 		pNightMode->visible = (experimentalvco->Theme == 1);
-
 		pEspenBack->visible = (experimentalvco->Theme == 2);
 		pEspenFront->visible = (experimentalvco->Theme == 2);
 
 		pOmriBack->visible = (experimentalvco->Theme == 3);
 		pOmriFront->visible = (experimentalvco->Theme == 3);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

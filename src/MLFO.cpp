@@ -235,6 +235,7 @@ struct LFOWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		LFO *lfo = dynamic_cast<LFO*>(module);
 		assert(lfo);
@@ -243,6 +244,7 @@ struct LFOWidget : ModuleWidget {
 		menu->addChild(construct<LClassicMenu>(&LClassicMenu::text, "Classic (default)", &LClassicMenu::lfo, lfo));
 		menu->addChild(construct<LNightModeMenu>(&LNightModeMenu::text, "Night Mode", &LNightModeMenu::lfo, lfo));
 	}
+#endif
 
 	LFOWidget(LFO *module);
 	void step() override;
@@ -309,13 +311,17 @@ LFOWidget::LFOWidget(LFO *module) {
 };
 
 void LFOWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		LFO *lfo = dynamic_cast<LFO*>(module);
 		assert(lfo);
 		panelClassic->visible = (lfo->Theme == 0);
 		panelNightMode->visible = (lfo->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

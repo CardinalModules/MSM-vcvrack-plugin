@@ -512,6 +512,7 @@ struct xseqWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		xseq *xs = dynamic_cast<xseq*>(module);
 		assert(xs);
@@ -520,6 +521,7 @@ struct xseqWidget : ModuleWidget {
 		menu->addChild(construct<xsClassicMenu>(&xsClassicMenu::text, "Classic (default)", &xsClassicMenu::xs, xs));
 		menu->addChild(construct<xsNightModeMenu>(&xsNightModeMenu::text, "Night Mode", &xsNightModeMenu::xs, xs));
 	}
+#endif
 
 	xseqWidget(xseq *module);
 	void step() override;
@@ -602,13 +604,17 @@ xseqWidget::xseqWidget(xseq *module) {
 };
 
 void xseqWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		xseq *xs = dynamic_cast<xseq*>(module);
 		assert(xs);
 		panelClassic->visible = (xs->Theme == 0);
 		panelNightMode->visible = (xs->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

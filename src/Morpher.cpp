@@ -279,6 +279,7 @@ struct MorpherWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
   void appendContextMenu(Menu *menu) override {
   	Morpher *morpher = dynamic_cast<Morpher*>(module);
   	assert(morpher);
@@ -310,6 +311,7 @@ struct MorpherWidget : ModuleWidget {
     menu->addChild(construct<morphClassicMenu>(&morphClassicMenu::text, "Classic (default)", &morphClassicMenu::morpher, morpher));
     menu->addChild(construct<morphNightModeMenu>(&morphNightModeMenu::text, "Night Mode", &morphNightModeMenu::morpher, morpher));
   }
+#endif
 
 	MorpherWidget(Morpher *module);
 	void step() override;
@@ -363,13 +365,17 @@ MorpherWidget::MorpherWidget(Morpher *module) {
 };
 
 void MorpherWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
   if (module) {
   	Morpher *morpher = dynamic_cast<Morpher*>(module);
   	assert(morpher);
   	panelClassic->visible = (morpher->Theme == 0);
   	panelNightMode->visible = (morpher->Theme == 1);
   }
-
+#endif
 	ModuleWidget::step();
 }
 

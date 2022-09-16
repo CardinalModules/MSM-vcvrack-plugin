@@ -96,6 +96,7 @@ struct SimpleSliderWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		SimpleSlider *simpleslider = dynamic_cast<SimpleSlider*>(module);
 		assert(simpleslider);
@@ -104,6 +105,7 @@ struct SimpleSliderWidget : ModuleWidget {
 		menu->addChild(construct<SimpleClassicMenu>(&SimpleClassicMenu::text, "Classic (default)", &SimpleClassicMenu::simpleslider, simpleslider));
 		menu->addChild(construct<SimpleNightModeMenu>(&SimpleNightModeMenu::text, "Night Mode", &SimpleNightModeMenu::simpleslider, simpleslider));
 	}
+#endif
 
 	SimpleSliderWidget(SimpleSlider *module);
 	void step() override;
@@ -143,13 +145,17 @@ SimpleSliderWidget::SimpleSliderWidget(SimpleSlider *module) {
 };
 
 void SimpleSliderWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		SimpleSlider *simpleslider = dynamic_cast<SimpleSlider*>(module);
 		assert(simpleslider);
 		panelClassic->visible = (simpleslider->Theme == 0);
 		panelNightMode->visible = (simpleslider->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

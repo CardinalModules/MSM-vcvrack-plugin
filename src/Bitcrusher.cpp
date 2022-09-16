@@ -141,6 +141,7 @@ struct BitcrusherWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		Bitcrusher *bitcrusher = dynamic_cast<Bitcrusher*>(module);
 		assert(bitcrusher);
@@ -150,6 +151,7 @@ struct BitcrusherWidget : ModuleWidget {
 		menu->addChild(construct<BitCClassicMenu>(&BitCClassicMenu::text, "Classic (default)", &BitCClassicMenu::bitcrusher, bitcrusher));
 		menu->addChild(construct<BitCNightModeMenu>(&BitCNightModeMenu::text, "Night Mode", &BitCNightModeMenu::bitcrusher, bitcrusher));
 	}
+#endif
 
 	BitcrusherWidget(Bitcrusher *module);
 	void step() override;
@@ -187,12 +189,17 @@ BitcrusherWidget::BitcrusherWidget(Bitcrusher *module) {
 };
 
 void BitcrusherWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		Bitcrusher *bitcrusher = dynamic_cast<Bitcrusher*>(module);
 		assert(bitcrusher);
 		panelClassic->visible = (bitcrusher->Theme == 0);
 		panelNightMode->visible = (bitcrusher->Theme == 1);
 	}
+#endif
 	ModuleWidget::step();
 }
 

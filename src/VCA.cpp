@@ -213,6 +213,7 @@ struct VCAWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu* menu) override {
 		VCA *vca = dynamic_cast<VCA*>(module);
 		assert(vca);
@@ -221,6 +222,7 @@ struct VCAWidget : ModuleWidget {
 		menu->addChild(construct<VCAClassicMenu>(&VCAClassicMenu::text, "Classic (default)", &VCAClassicMenu::vca, vca));
 		menu->addChild(construct<VCANightModeMenu>(&VCANightModeMenu::text, "Night Mode", &VCANightModeMenu::vca, vca));
 	}
+#endif
 
 	VCAWidget(VCA *module);
 	void step() override;
@@ -274,13 +276,17 @@ VCAWidget::VCAWidget(VCA *module) {
 };
 
 void VCAWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		VCA *vca = dynamic_cast<VCA*>(module);
 		assert(vca);
 		panelClassic->visible = (vca->Theme == 0);
 		panelNightMode->visible = (vca->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

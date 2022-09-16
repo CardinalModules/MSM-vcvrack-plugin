@@ -68,6 +68,7 @@ struct BlankPanelWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		BlankPanel *blankpanel = dynamic_cast<BlankPanel*>(module);
 		assert(blankpanel);
@@ -77,6 +78,7 @@ struct BlankPanelWidget : ModuleWidget {
 		menu->addChild(construct<BlankClassicMenu>(&BlankClassicMenu::text, "Classic (default)", &BlankClassicMenu::blankpanel, blankpanel));
 		menu->addChild(construct<BlankNightModeMenu>(&BlankNightModeMenu::text, "Night Mode", &BlankNightModeMenu::blankpanel, blankpanel));
 	}
+#endif
 
 	BlankPanelWidget(BlankPanel *module);
 	void step() override;
@@ -105,12 +107,17 @@ BlankPanelWidget::BlankPanelWidget(BlankPanel *module) {
 };
 
 void BlankPanelWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		BlankPanel *blankpanel = dynamic_cast<BlankPanel*>(module);
 		assert(blankpanel);
 		panelClassic->visible = (blankpanel->Theme == 0);
 		panelNightMode->visible = (blankpanel->Theme == 1);
 	}
+#endif
 	ModuleWidget::step();
 }
 

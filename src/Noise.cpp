@@ -163,6 +163,7 @@ struct NoiseWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu* menu) override {
 		Noise *noise = dynamic_cast<Noise*>(module);
 		assert(noise);
@@ -171,6 +172,7 @@ struct NoiseWidget : ModuleWidget {
 		menu->addChild(construct<NClassicMenu>(&NClassicMenu::text, "Classic (default)", &NClassicMenu::noise, noise));
 		menu->addChild(construct<NNightModeMenu>(&NNightModeMenu::text, "Night Mode", &NNightModeMenu::noise, noise));
 	}
+#endif
 
 	NoiseWidget(Noise *module);
 	void step() override;
@@ -212,13 +214,17 @@ NoiseWidget::NoiseWidget(Noise *module) {
 };
 
 void NoiseWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		Noise *noise = dynamic_cast<Noise*>(module);
 		assert(noise);
 		panelClassic->visible = (noise->Theme == 0);
 		panelNightMode->visible = (noise->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

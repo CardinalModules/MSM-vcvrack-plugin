@@ -125,6 +125,7 @@ struct FadeWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		Fade *fade = dynamic_cast<Fade*>(module);
 		assert(fade);
@@ -134,6 +135,7 @@ struct FadeWidget : ModuleWidget {
 		menu->addChild(construct<FadeClassicMenu>(&FadeClassicMenu::text, "Classic (default)", &FadeClassicMenu::fade, fade));
 		menu->addChild(construct<FadekNightModeMenu>(&FadekNightModeMenu::text, "Night Mode", &FadekNightModeMenu::fade, fade));
 	}
+#endif
 
 	FadeWidget(Fade *module);
 	void step() override;
@@ -181,12 +183,17 @@ FadeWidget::FadeWidget(Fade *module) {
 };
 
 void FadeWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		Fade *fade = dynamic_cast<Fade*>(module);
 		assert(fade);
 		panelClassic->visible = (fade->Theme == 0);
 		panelNightMode->visible = (fade->Theme == 1);
 	}
+#endif
 	ModuleWidget::step();
 }
 

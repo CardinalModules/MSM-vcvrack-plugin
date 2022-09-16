@@ -46,8 +46,8 @@ extern Model *modelSimpleSlider;
 extern Model *modelxseq;
 extern Model *modelBlankPanel;
 
-#ifdef DARKTHEME
-#define THEME_DEFAULT 1
+#ifdef USING_CARDINAL_NOT_RACK
+#define THEME_DEFAULT (settings::preferDarkPanels ? 1 : 0)
 #else
 #define THEME_DEFAULT 0
 #endif

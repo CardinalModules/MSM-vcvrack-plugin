@@ -602,6 +602,7 @@ struct PhaserModuleWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
   void appendContextMenu(Menu* menu) override {
   	PhaserModule *phasermodule = dynamic_cast<PhaserModule*>(module);
   	assert(phasermodule);
@@ -610,6 +611,7 @@ struct PhaserModuleWidget : ModuleWidget {
   	menu->addChild(construct<PhaserClassicMenu>(&PhaserClassicMenu::text, "Classic (default)", &PhaserClassicMenu::phasermodule, phasermodule));
   	menu->addChild(construct<PhaserNightModeMenu>(&PhaserNightModeMenu::text, "Night Mode", &PhaserNightModeMenu::phasermodule, phasermodule));
   }
+#endif
 
 	PhaserModuleWidget(PhaserModule *module);
 	void step() override;
@@ -659,13 +661,17 @@ PhaserModuleWidget::PhaserModuleWidget(PhaserModule *module) {
 };
 
 void PhaserModuleWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
   if (module) {
   	PhaserModule *phasermodule = dynamic_cast<PhaserModule*>(module);
   	assert(phasermodule);
   	panelClassic->visible = (phasermodule->Theme == 0);
   	panelNightMode->visible = (phasermodule->Theme == 1);
   }
-
+#endif
 	ModuleWidget::step();
 }
 

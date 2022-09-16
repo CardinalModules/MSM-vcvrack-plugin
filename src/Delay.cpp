@@ -707,6 +707,7 @@ struct DelayWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
   void appendContextMenu(Menu *menu) override {
   	Delay *delay = dynamic_cast<Delay*>(module);
   	assert(delay);
@@ -715,6 +716,7 @@ struct DelayWidget : ModuleWidget {
   	menu->addChild(construct<BPClassicMenu>(&BPClassicMenu::text, "Classic (default)", &BPClassicMenu::delay, delay));
   	menu->addChild(construct<BPNightModeMenu>(&BPNightModeMenu::text, "Night Mode", &BPNightModeMenu::delay, delay));
   }
+#endif
 
 	DelayWidget(Delay *module);
 	void step() override;
@@ -824,19 +826,24 @@ DelayWidget::DelayWidget(Delay *module) {
 };
 
 void DelayWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+  panelClassic->visible = !settings::preferDarkPanels;
+  panelNightMode->visible = settings::preferDarkPanels;
+  if (Delay *delay = dynamic_cast<Delay*>(module)) {
+#else
   if (module) {
   	Delay *delay = dynamic_cast<Delay*>(module);
   	assert(delay);
   	// Panel Theme
   	panelClassic->visible = (delay->Theme == 0);
   	panelNightMode->visible = (delay->Theme == 1);
+#endif
   	// Display
   	displayA->visible = (delay->DISPLAYA == 0);
   	TRdisplayA->visible = (delay->DISPLAYA == 1);
   	displayB->visible = (delay->DISPLAYB == 0);
   	TRdisplayB->visible = (delay->DISPLAYB == 1);
   }
-
 	ModuleWidget::step();
 }
 

@@ -117,6 +117,7 @@ struct RingModWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
   void appendContextMenu(Menu *menu) override {
   	RingMod *ringmod = dynamic_cast<RingMod*>(module);
   	assert(ringmod);
@@ -125,6 +126,7 @@ struct RingModWidget : ModuleWidget {
   	menu->addChild(construct<RMClassicMenu>(&RMClassicMenu::text, "Classic (default)", &RMClassicMenu::ringmod, ringmod));
   	menu->addChild(construct<RMNightModeMenu>(&RMNightModeMenu::text, "Night Mode", &RMNightModeMenu::ringmod, ringmod));
   }
+#endif
 
 	RingModWidget(RingMod *module);
 	void step() override;
@@ -165,13 +167,17 @@ RingModWidget::RingModWidget(RingMod *module) {
 };
 
 void RingModWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
   if (module) {
   	RingMod *ringmod = dynamic_cast<RingMod*>(module);
   	assert(ringmod);
   	panelClassic->visible = (ringmod->Theme == 0);
   	panelNightMode->visible = (ringmod->Theme == 1);
   }
-
+#endif
 	ModuleWidget::step();
 }
 

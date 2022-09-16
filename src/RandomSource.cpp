@@ -136,6 +136,7 @@ struct RandomSourceWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		RandomSource *randomsource = dynamic_cast<RandomSource*>(module);
 		assert(randomsource);
@@ -144,6 +145,7 @@ struct RandomSourceWidget : ModuleWidget {
 		menu->addChild(construct<RandomSClassicMenu>(&RandomSClassicMenu::text, "Classic (default)", &RandomSClassicMenu::randomsource, randomsource));
 		menu->addChild(construct<RandomSNightModeMenu>(&RandomSNightModeMenu::text, "Night Mode", &RandomSNightModeMenu::randomsource, randomsource));
 	}
+#endif
 
 	RandomSourceWidget(RandomSource *module);
 	void step() override;
@@ -192,13 +194,17 @@ RandomSourceWidget::RandomSourceWidget(RandomSource *module) {
 };
 
 void RandomSourceWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		RandomSource *randomsource = dynamic_cast<RandomSource*>(module);
 		assert(randomsource);
 		panelClassic->visible = (randomsource->Theme == 0);
 		panelNightMode->visible = (randomsource->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

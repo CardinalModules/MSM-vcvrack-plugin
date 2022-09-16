@@ -687,6 +687,7 @@ struct VCOWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		VCO *vco = dynamic_cast<VCO*>(module);
 		assert(vco);
@@ -695,6 +696,7 @@ struct VCOWidget : ModuleWidget {
 		menu->addChild(construct<VCOClassicMenu>(&VCOClassicMenu::text, "Classic (default)", &VCOClassicMenu::vco, vco));
 		menu->addChild(construct<VCONightModeMenu>(&VCONightModeMenu::text, "Night Mode", &VCONightModeMenu::vco, vco));
 	}
+#endif
 
 	VCOWidget(VCO *module);
 	void step() override;
@@ -777,6 +779,10 @@ VCOWidget::VCOWidget(VCO *module) {
 };
 
 void VCOWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		VCO *vco = dynamic_cast<VCO*>(module);
 		assert(vco);
@@ -784,7 +790,7 @@ void VCOWidget::step() {
 		panelClassic->visible = (vco->Theme == 0);
 		panelNightMode->visible = (vco->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 
@@ -951,6 +957,7 @@ struct BVCOWidget : ModuleWidget {
 	SvgPanel *pClassic;
 	SvgPanel *pNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		BVCO *bvco = dynamic_cast<BVCO*>(module);
 		assert(bvco);
@@ -959,6 +966,7 @@ struct BVCOWidget : ModuleWidget {
 		menu->addChild(construct<BVCOClassicMenu>(&BVCOClassicMenu::text, "Classic (default)", &BVCOClassicMenu::bvco, bvco));
 		menu->addChild(construct<BVCONightModeMenu>(&BVCONightModeMenu::text, "Night Mode", &BVCONightModeMenu::bvco, bvco));
 	}
+#endif
 
 	BVCOWidget(BVCO *module);
 	void step() override;
@@ -1012,13 +1020,17 @@ BVCOWidget::BVCOWidget(BVCO *module) {
 };
 
 void BVCOWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	pClassic->visible = !settings::preferDarkPanels;
+	pNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		BVCO *bvco = dynamic_cast<BVCO*>(module);
 		assert(bvco);
 		pClassic->visible = (bvco->Theme == 0);
 		pNightMode->visible = (bvco->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

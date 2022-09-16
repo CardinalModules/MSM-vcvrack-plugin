@@ -144,6 +144,7 @@ struct WaveShaperWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		WaveShaper *waveshaper = dynamic_cast<WaveShaper*>(module);
 		assert(waveshaper);
@@ -152,6 +153,7 @@ struct WaveShaperWidget : ModuleWidget {
 		menu->addChild(construct<WSClassicMenu>(&WSClassicMenu::text, "Classic (default)", &WSClassicMenu::waveshaper, waveshaper));
 		menu->addChild(construct<WSNightModeMenu>(&WSNightModeMenu::text, "Night Mode", &WSNightModeMenu::waveshaper, waveshaper));
 	}
+#endif
 
 	WaveShaperWidget(WaveShaper *module);
 	void step() override;
@@ -205,13 +207,17 @@ WaveShaperWidget::WaveShaperWidget(WaveShaper *module) {
 };
 
 void WaveShaperWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		WaveShaper *waveshaper = dynamic_cast<WaveShaper*>(module);
 		assert(waveshaper);
 		panelClassic->visible = (waveshaper->Theme == 0);
 		panelNightMode->visible = (waveshaper->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

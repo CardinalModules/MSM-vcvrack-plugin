@@ -179,6 +179,7 @@ struct MultWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		Mult *mult = dynamic_cast<Mult*>(module);
 		assert(mult);
@@ -188,6 +189,7 @@ struct MultWidget : ModuleWidget {
 		menu->addChild(construct<MultClassicMenu>(&MultClassicMenu::text, "Classic (default)", &MultClassicMenu::mult, mult));
 		menu->addChild(construct<MultNightModeMenu>(&MultNightModeMenu::text, "Night Mode", &MultNightModeMenu::mult, mult));
 	}
+#endif
 
 	MultWidget(Mult *module);
 	void step() override;
@@ -247,13 +249,17 @@ MultWidget::MultWidget(Mult *module) {
 };
 
 void MultWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		Mult *mult = dynamic_cast<Mult*>(module);
 		assert(mult);
 		panelClassic->visible = (mult->Theme == 0);
 		panelNightMode->visible = (mult->Theme == 1);
 	}
-
+#endif
 	ModuleWidget::step();
 }
 

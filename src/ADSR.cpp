@@ -205,6 +205,7 @@ struct ADSRWidget : ModuleWidget {
 	SvgPanel *panelClassic;
 	SvgPanel *panelNightMode;
 
+#ifndef USING_CARDINAL_NOT_RACK
 	void appendContextMenu(Menu *menu) override {
 		ADSR *adsr = dynamic_cast<ADSR*>(module);
 		assert(adsr);
@@ -218,6 +219,7 @@ struct ADSRWidget : ModuleWidget {
 		//menu->addChild(construct<LogarithmicMenu>(&LogarithmicMenu::text, "Logarithmic Mode", &LogarithmicMenu::adsr, adsr));
 		//menu->addChild(construct<LinearMenu>(&LinearMenu::text, "Linear Mode", &LinearMenu::adsr, adsr));
 	}
+#endif
 
 	ADSRWidget(ADSR *module);
 	void step() override;
@@ -278,12 +280,17 @@ ADSRWidget::ADSRWidget(ADSR *module) {
 }
 
 void ADSRWidget::step() {
+#ifdef USING_CARDINAL_NOT_RACK
+	panelClassic->visible = !settings::preferDarkPanels;
+	panelNightMode->visible = settings::preferDarkPanels;
+#else
 	if (module) {
 		ADSR *adsr = dynamic_cast<ADSR*>(module);
 		assert(adsr);
 		panelClassic->visible = (adsr->Theme == 0);
 		panelNightMode->visible = (adsr->Theme == 1);
 	}
+#endif
 	ModuleWidget::step();
 }
 
